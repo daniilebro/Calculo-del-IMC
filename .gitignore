@@ -1,24 +1,65 @@
-# Compiled class file
-*.class
+import java.util.Scanner;
 
-# Log file
-*.log
+class Main {
+  ///Método cálculo del IMC
+  public static double IMC(double peso, double altura){
+    int exp=2;
+    double denominador=Math.pow(altura, exp);
+    double IMC=peso/denominador;
+    return IMC;
+  }
 
-# BlueJ files
-*.ctxt
+  //Método cálculo nivel de riesgo
+  public static String N_Riesgo(double IMC, int edad){
+    if (edad<45&&IMC<22){
+      String resultado="Bajo";
+      return resultado;
+    } else if (edad>=45&&IMC>=22){
+      String resultado="Alto";
+      return resultado; 
+    } else {
+      String resultado="Medio";
+      return resultado; 
+    }
+  }
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+//   Los valores de masa permitidos están entre 0 y 150
+// Los valores de altura permitidos están entre 0.1 y 2.5 Los valores de años permitidos están entre O y 110
+// Si alguno de los valores está fuera del rango permitido se debe imprimir un mensaje de error
+  
+  //Método validación de datos de entrada
+  public static String validacion(double peso, double altura, int edad){
+    if (peso>0 && peso<=150 && altura>0.1 && altura<2.5 && edad>0 && edad<=110){
+      String validado="Ok";
+      return validado;
+    } else{
+      String validado="ERROR";
+      return validado;
+    }
+  }
+  
+  public static void main(String[] args) {
+    //System.out.println("Ingrese peso(kg), altura(metros) y edad(años), separados por espacio");
+    Scanner informacion = new Scanner(System.in);
+    double peso, altura;
+    int edad;
+    peso = informacion.nextDouble();
+    altura = informacion.nextDouble();
+    edad = informacion.nextInt();
 
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
+    //Llamando método de validación de entradas:
+    String validacion=validacion(peso,altura,edad);
+    if (validacion=="Ok"){
+      //Llamando método cálculo del IMC:
+      double IMC= IMC(peso, altura);
+      //System.out.println("El IMC es de: "+IMC);
+      //Llamando método cálculo del Nivel de riesgo:
+      String N_Riesgo= N_Riesgo(IMC, edad);
+      //System.out.println("El Nivel de riesgo es de: "+ N_Riesgo);
+      System.out.println((String.format("%.1f",IMC))+" "+N_Riesgo);
+    } else{
+      String validacion_error=validacion(peso,altura,edad);
+      System.out.println(validacion_error);
+    }
+  }
+}
